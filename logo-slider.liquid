@@ -1,0 +1,182 @@
+<section class="our-brand-logo">
+  <div class="page-width">
+    <div class="our-brand-with-title">
+      {% if section.settings.logo-title!= blank %}
+        <div class="logo-title">
+          <h2>{{ section.settings.logo-title }}</h2>
+        </div>
+      {% endif %}
+    <div class="brand-logo owl-carousel owl-theme" id="brand-logo">
+    {% for block in section.blocks %}
+    <div class="item">
+      <div class="brand-img">
+          <img class="img-fluid" src="{% if block.settings.brand_image %}{{ block.settings.brand_image | img_url: 'master' }} {% else %}https://via.placeholder.com/120x250 {% endif %}" alt="{{ block.settings.brand_image.alt }}">
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+  </div>
+</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" >
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" ></script>
+<script>
+  $('#brand-logo').owlCarousel({
+    loop: true,
+    rewind: true,
+    margin: 0,
+    nav: false,
+    navText: ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
+    dots: false,
+    {%- if settings.enable_rtl -%}
+    rtl: true,
+    {%- endif -%}
+    autoplay: false, 
+    sautoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    responsive:{
+      0:{
+        items: 2,
+        margin: 15
+      },
+      479:{
+        items: 2,
+         margin: 15
+      },
+      768:{
+        items: 3
+      },
+      979:{
+        items: 3
+      },
+      1199:{
+        items: 6
+      }
+    }
+  });
+</script>
+{% schema %}
+{
+  "name": "Brand Logo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo-title",
+      "default": "As Seen On",
+      "label":"Title"
+    },
+  {
+    "type": "header",
+    "content": "Section Padding"
+  },
+  {
+    "type" : "paragraph",
+    "content" : "Desktop / Laptop / tablet"
+  },
+  {
+    "type": "range",
+    "id": "brand_padding_top",
+    "label": "Section Padding Top",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "default": 60
+  },
+  {
+    "type": "range",
+    "id": "brand_padding_bottom",
+    "label": "Section Padding bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "default": 60
+  },
+  {
+    "type" : "paragraph",
+    "content" : "Mobile"
+  },
+  {
+    "type": "range",
+    "id": "brand_padding_top_xs",
+    "label": "Section Padding Top",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "default": 40
+  },
+  {
+    "type": "range",
+    "id": "brand_padding_bottom_xs",
+    "label": "Section Padding bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "default": 40
+  },
+  {
+    "type" : "header",
+    "content" : "Background Color"
+  },
+  {
+    "type" : "checkbox",
+    "id" : "brand_check",
+    "label" : "With Backgorund",
+    "default" : true
+  },
+  {
+    "type" : "color",
+    "id" : "brand_bgcolor",
+    "label" : "Background Color",
+    "default" : "#fff"
+  }
+],
+  "blocks":[
+  {
+    "type": "single_brand",
+    "name": "Single Brand Logo",
+    "limit": 10,
+    "settings": [
+    {
+      "type": "image_picker",
+      "id": "brand_image",
+      "label": "Brand Image",
+      "info": "Recommended Size: 170 x 82px"
+    }
+    ]
+  }
+  ],
+  "presets":[
+  {
+    "name": "Brand Logo",
+    "category": "brand logo"
+  }
+  ]
+}
+{% endschema %}
+
+<style>
+  .our-brand-logo {
+    padding-top:{{ section.settings.brand_padding_top }}px;
+    padding-bottom:{{ section.settings.brand_padding_bottom }}px;
+    {% if section.settings.brand_check %}
+    background-color: {{ section.settings.brand_bgcolor }};
+    {% endif %}
+  }
+  @media (max-width: 767px){
+    .our-brand-logo {
+      padding-top:{{ section.settings.brand_padding_top_xs }}px;
+      padding-bottom:{{ section.settings.brand_padding_bottom_xs }}px;
+    }
+  }
+  .our-brand-logo .brand-logo a img,
+  .our-brand-logo .brand-logo a:hover img {
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
+</style>
